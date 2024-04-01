@@ -30,7 +30,7 @@ def search_paragraphs(request, word):
         words = paragraph.text.split()
         words_lower = [word.lower() for word in words]
 
-        # Check if the search word is in the paragraph
+        # Checking if the search word is in the paragraph
         if search_word in words_lower:
             matching_paragraphs.append(paragraph)
 
@@ -45,7 +45,7 @@ def post_data(request):
     # Extract paragraph from request data
     paragraph_text = request.data.get('paragraph')
 
-    # Check if paragraph text is provided
+    # Checking if paragraph text is provided
     if not paragraph_text:
         return Response({'error': 'Paragraph text is required'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -55,11 +55,8 @@ def post_data(request):
     # Convert all words to lowercase
     words_lower = [word.lower() for word in words]
 
-    # Generate a unique ID for the paragraph
-    # You can use Django's auto-generated primary key for this purpose
-    # Alternatively, can generate a UUID
-    # For simplicity, let's assume  using the auto-generated primary key
-    # In this case, we can leave it blank and let the database handle it
+    #  a unique ID for the paragraph
+    
 
     # Identify paragraphs based on two newline characters
     paragraphs = re.split(r'\n{2,}', paragraph_text.strip())
@@ -78,7 +75,7 @@ def post_data(request):
 
 
 @api_view(['PUT'])
-@authentication_classes([JWTAuthentication])  # Add JWT authentication
+@authentication_classes([JWTAuthentication])  # Adding JWT authentication
 def update_data(request, pk):
     user_obj = CustomUser.objects.get(pk=pk)  # Fetch the existing user object
     serializer = UserSerializer(user_obj, data=request.data, partial=True)  # Use partial=True to allow partial updates
@@ -89,7 +86,7 @@ def update_data(request, pk):
 
 
 @api_view(['DELETE'])
-@authentication_classes([JWTAuthentication])  # Add JWT authentication
+@authentication_classes([JWTAuthentication])  # Adding JWT authentication
 def delete_data(request, pk):
     user_obj = CustomUser.objects.get(pk=pk)
     user_obj.delete()
